@@ -1,4 +1,4 @@
-/*
+·/*
  * Licensed to Elasticsearch under one or more contributor
  * license agreements. See the NOTICE file distributed with
  * this work for additional information regarding copyright
@@ -51,7 +51,7 @@ class JdkDownloadPluginFuncTest extends AbstractGradleFuncTest {
             plugins {
              id 'elasticsearch.jdk-download'
             }
-            
+
             jdks {
               myJdk {
                 vendor = '$jdkVendor'
@@ -106,10 +106,10 @@ class JdkDownloadPluginFuncTest extends AbstractGradleFuncTest {
             plugins {
              id 'elasticsearch.jdk-download' apply false
             }
-            
+
             subprojects {
                 apply plugin: 'elasticsearch.jdk-download'
-    
+
                 jdks {
                   myJdk {
                     vendor = '$jdkVendor'
@@ -162,7 +162,7 @@ class JdkDownloadPluginFuncTest extends AbstractGradleFuncTest {
                 architecture = "x64"
               }
             }
-            
+
             tasks.register("getJdk") {
                 dependsOn jdks.myJdk
                 doLast {
