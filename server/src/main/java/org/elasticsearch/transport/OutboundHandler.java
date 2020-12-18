@@ -133,7 +133,7 @@ final class OutboundHandler {
         }
     }
 
-    void setMessageListener(TransportMessageListener listener) {
+    void setMessageListener(TransportMessageListener listener) {        //设置小写的监听器
         if (messageListener == TransportMessageListener.NOOP_LISTENER) {
             messageListener = listener;
         } else {

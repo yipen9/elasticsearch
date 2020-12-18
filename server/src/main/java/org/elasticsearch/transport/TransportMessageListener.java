@@ -20,6 +20,7 @@ package org.elasticsearch.transport;
 
 import org.elasticsearch.cluster.node.DiscoveryNode;
 
+//消息发送接收的listener
 public interface TransportMessageListener {
 
     TransportMessageListener NOOP_LISTENER = new TransportMessageListener() {};

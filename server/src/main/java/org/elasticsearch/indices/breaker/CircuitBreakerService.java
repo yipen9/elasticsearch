@@ -25,6 +25,8 @@ import org.elasticsearch.common.component.AbstractLifecycleComponent;
 /**
  * Interface for Circuit Breaker services, which provide breakers to classes
  * that load field data.
+ * Circuit Breaker 模式会处理一些需要一定时间来重连远程服务和远端资源的错误。
+ * 该模式可以提高一个应用的稳定性和弹性。
  */
 public abstract class CircuitBreakerService extends AbstractLifecycleComponent {
 

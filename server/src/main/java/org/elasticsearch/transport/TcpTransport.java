@@ -97,41 +97,55 @@ import static org.elasticsearch.common.util.concurrent.ConcurrentCollections.new
 public abstract class TcpTransport extends AbstractLifecycleComponent implements Transport {
     private static final Logger logger = LogManager.getLogger(TcpTransport.class);
 
+    //transport模块工作线程名称前缀
     public static final String TRANSPORT_WORKER_THREAD_NAME_PREFIX = "transport_worker";
 
-    // This is the number of bytes necessary to read the message size
+    // This is the number of bytes necessary to read the message size读取message长度需要必须的bytes的长度
     private static final int BYTES_NEEDED_FOR_MESSAGE_SIZE = TcpHeader.MARKER_BYTES_SIZE + TcpHeader.MESSAGE_LENGTH_SIZE;
-    private static final long THIRTY_PER_HEAP_SIZE = (long) (JvmInfo.jvmInfo().getMem().getHeapMax().getBytes() * 0.3);
+    private static final long THIRTY_PER_HEAP_SIZE = (long) (JvmInfo.jvmInfo().getMem().getHeapMax().getBytes() * 0.3); //最大堆内存的1/3
 
-    final StatsTracker statsTracker = new StatsTracker();
+    final StatsTracker statsTracker = new StatsTracker();   //统计追踪
 
-    // this limit is per-address
+    // this limit is per-address  每个地址限制本地端口数
     private static final int LIMIT_LOCAL_PORTS_COUNT = 6;
 
     protected final Settings settings;
     private final Version version;
     protected final ThreadPool threadPool;
+    //页面缓存回收器
     protected final PageCacheRecycler pageCacheRecycler;
+    //网络和地址相关服务
     protected final NetworkService networkService;
     protected final Set<ProfileSettings> profileSettings;
+
     private final CircuitBreakerService circuitBreakerService;
 
     private final ConcurrentMap<String, BoundTransportAddress> profileBoundAddresses = newConcurrentMap();
+    //保存各个模块服务端的channel(TcpServerChannel)
     private final Map<String, List<TcpServerChannel>> serverChannels = newConcurrentMap();
+    //保存各个模块已经接受的channel(TcpChannel)
     private final Set<TcpChannel> acceptedChannels = ConcurrentCollections.newConcurrentSet();
 
     // this lock is here to make sure we close this transport and disconnect all the client nodes
     // connections while no connect operations is going on
+    //保证我们关闭这个transport，并且断开所有的客户端节点。（那些没有继续连接操作的connections）
     private final ReadWriteLock closeLock = new ReentrantReadWriteLock();
+
+    //transport绑定地址
     private volatile BoundTransportAddress boundAddress;
-
+    //tansport handshakes握手
     private final TransportHandshaker handshaker;
+    //transport keepalive 心跳
     private final TransportKeepAlive keepAlive;
+    //出站处理
     private final OutboundHandler outboundHandler;
+    //入站处理
     private final InboundHandler inboundHandler;
+    //响应handlers
     private final ResponseHandlers responseHandlers = new ResponseHandlers();
+    //请求handlers
     private final RequestHandlers requestHandlers = new RequestHandlers();
-
+    //出站连接数
     private final AtomicLong outboundConnectionCount = new AtomicLong(); // also used as a correlation ID for open/close logs
 
     public TcpTransport(Settings settings, Version version, ThreadPool threadPool, PageCacheRecycler pageCacheRecycler,
@@ -184,17 +198,19 @@ public abstract class TcpTransport extends AbstractLifecycleComponent implements
     }
 
     @Override
-    public void setSlowLogThreshold(TimeValue slowLogThreshold) {
+    public void setSlowLogThreshold(TimeValue slowLogThreshold) {//甚至慢日志的阀值
         inboundHandler.setSlowLogThreshold(slowLogThreshold);
     }
 
+    //节点对应所有channels的封装
     public final class NodeChannels extends CloseableConnection {
+        ////RECOVERY,BULK,REG,STATE,PING类型对应的handle（ConnectionTypeHandle）
         private final Map<TransportRequestOptions.Type, ConnectionProfile.ConnectionTypeHandle> typeMapping;
-        private final List<TcpChannel> channels;
-        private final DiscoveryNode node;
-        private final Version version;
-        private final boolean compress;
-        private final AtomicBoolean isClosing = new AtomicBoolean(false);
+        private final List<TcpChannel> channels;    //所有连接channel
+        private final DiscoveryNode node;     //远程节点信息
+        private final Version version;      //版本
+        private final boolean compress;     //是否压缩
+        private final AtomicBoolean isClosing = new AtomicBoolean(false);   //是否正在关闭
 
         NodeChannels(DiscoveryNode node, List<TcpChannel> channels, ConnectionProfile connectionProfile, Version handshakeVersion) {
             this.node = node;
@@ -245,6 +261,7 @@ public abstract class TcpTransport extends AbstractLifecycleComponent implements
             return this.node;
         }
 
+        //发送transport请求
         @Override
         public void sendRequest(long requestId, String action, TransportRequest request, TransportRequestOptions options)
             throws IOException, TransportException {
