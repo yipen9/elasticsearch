@@ -19,6 +19,7 @@
 
 package org.elasticsearch.transport.yi;
 
+import org.elasticsearch.Version;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.cluster.node.DiscoveryNode;
 import org.elasticsearch.common.component.Lifecycle;
@@ -32,117 +33,44 @@ import org.elasticsearch.common.util.PageCacheRecycler;
 import org.elasticsearch.indices.breaker.CircuitBreakerService;
 import org.elasticsearch.threadpool.ThreadPool;
 import org.elasticsearch.transport.ConnectionProfile;
+import org.elasticsearch.transport.TcpChannel;
+import org.elasticsearch.transport.TcpServerChannel;
 import org.elasticsearch.transport.TcpTransport;
 import org.elasticsearch.transport.Transport;
 import org.elasticsearch.transport.TransportMessageListener;
+import org.elasticsearch.transport.TransportSettings;
 import org.elasticsearch.transport.TransportStats;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class YiTransport implements Transport {
+public class YiTransport extends TcpTransport  {
 
-
-    Settings settings;
-    ThreadPool threadPool;
-    PageCacheRecycler pageCacheRecycler;
-    CircuitBreakerService circuitBreakerService;
-    NamedWriteableRegistry namedWriteableRegistry;
-    NetworkService networkService;
-
-    public YiTransport(Settings settings, ThreadPool threadPool, PageCacheRecycler pageCacheRecycler,
-                       CircuitBreakerService circuitBreakerService, NamedWriteableRegistry namedWriteableRegistry,
-                       NetworkService networkService) {
-        this.settings = settings;
-        this.threadPool = threadPool;
-        this.pageCacheRecycler = pageCacheRecycler;
-        this.circuitBreakerService = circuitBreakerService;
-        this.namedWriteableRegistry = namedWriteableRegistry;
-        this.networkService = networkService;
+    public YiTransport(Settings settings, Version version,
+                       ThreadPool threadPool, PageCacheRecycler pageCacheRecycler,
+                       CircuitBreakerService circuitBreakerService,
+                       NamedWriteableRegistry namedWriteableRegistry, NetworkService networkService) {
+        super(settings, version, threadPool, pageCacheRecycler, circuitBreakerService, namedWriteableRegistry, networkService);
     }
 
     @Override
-    public void setMessageListener(TransportMessageListener listener) {
-
-    }
-
-    public static Set<TcpTransport.ProfileSettings> getProfileSettings(Settings settings) {
-        HashSet<TcpTransport.ProfileSettings> profiles = new HashSet<>();
-        boolean isDefaultSet = false;
+    protected TcpServerChannel bind(String name, InetSocketAddress address) throws IOException {
         return null;
     }
 
     @Override
-    public BoundTransportAddress boundAddress() {
-//        networkService.resolveBindHostAddresses()
+    protected TcpChannel initiateChannel(DiscoveryNode node) throws IOException {
         return null;
     }
 
     @Override
-    public Map<String, BoundTransportAddress> profileBoundAddresses() {
-        return null;
-    }
-
-    @Override
-    public TransportAddress[] addressesFromString(String address) throws UnknownHostException {
-        return new TransportAddress[0];
-    }
-
-    @Override
-    public List<String> getDefaultSeedAddresses() {
-        return null;
-    }
-
-    @Override
-    public void openConnection(DiscoveryNode node, ConnectionProfile profile, ActionListener<Connection> listener) {
-
-    }
-
-    @Override
-    public TransportStats getStats() {
-        return null;
-    }
-
-    @Override
-    public ResponseHandlers getResponseHandlers() {
-        return null;
-    }
-
-    @Override
-    public RequestHandlers getRequestHandlers() {
-        return null;
-    }
-
-    @Override
-    public Lifecycle.State lifecycleState() {
-        return null;
-    }
-
-    @Override
-    public void addLifecycleListener(LifecycleListener listener) {
-
-    }
-
-    @Override
-    public void removeLifecycleListener(LifecycleListener listener) {
-
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public void close() {
+    protected void stopInternal() {
 
     }
 }
