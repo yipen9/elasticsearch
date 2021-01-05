@@ -32,7 +32,7 @@ public class NettyByteBufSizer extends MessageToMessageDecoder<ByteBuf> {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf buf, List<Object> out) {
         int readableBytes = buf.readableBytes();
-        if (buf.capacity() >= 1024) {
+        if (buf.capacity() >= 1024) {//如果buf的容量大于1024,重新设置，capacity为readableBytes
             ByteBuf resized = buf.discardReadBytes().capacity(readableBytes);
             assert resized.readableBytes() == readableBytes;
             out.add(resized.retain());

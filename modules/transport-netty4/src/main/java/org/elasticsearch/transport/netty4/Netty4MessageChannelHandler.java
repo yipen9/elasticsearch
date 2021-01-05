@@ -62,7 +62,7 @@ final class Netty4MessageChannelHandler extends ChannelDuplexHandler {
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {   //读取消息
         assert Transports.assertDefaultThreadContext(transport.getThreadPool().getThreadContext());
         assert Transports.assertTransportThread();
         assert msg instanceof ByteBuf : "Expected message type ByteBuf, found: " + msg.getClass();

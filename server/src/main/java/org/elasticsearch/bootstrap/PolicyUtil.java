@@ -218,6 +218,7 @@ public class PolicyUtil {
     @SuppressForbidden(reason = "accesses fully qualified URLs to configure security")
     public static Policy readPolicy(URL policyFile, Map<String, URL> codebases) {
         try {
+
             Properties originalProps = System.getProperties();
             // allow missing while still setting values
             Set<String> unknownCodebases = new HashSet<>();

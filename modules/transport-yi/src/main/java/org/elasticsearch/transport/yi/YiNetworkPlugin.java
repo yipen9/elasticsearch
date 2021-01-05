@@ -30,6 +30,7 @@ import org.elasticsearch.common.xcontent.NamedXContentRegistry;
 import org.elasticsearch.http.HttpServerTransport;
 import org.elasticsearch.indices.breaker.CircuitBreakerService;
 import org.elasticsearch.plugins.NetworkPlugin;
+import org.elasticsearch.plugins.Plugin;
 import org.elasticsearch.threadpool.ThreadPool;
 import org.elasticsearch.transport.Transport;
 import org.elasticsearch.transport.TransportInterceptor;
@@ -38,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class YiNetworkPlugin implements NetworkPlugin {
+public class YiNetworkPlugin  extends Plugin implements NetworkPlugin {
     @Override
     public List<TransportInterceptor> getTransportInterceptors(NamedWriteableRegistry namedWriteableRegistry, ThreadContext threadContext) {
         return null;

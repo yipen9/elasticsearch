@@ -124,7 +124,7 @@ public class Netty4Transport extends TcpTransport {
         boolean success = false;
         try {
             sharedGroup = sharedGroupFactory.getTransportGroup();
-            clientBootstrap = createClientBootstrap(sharedGroup);
+            clientBootstrap = createClientBootstrap(sharedGroup);       //客户端连接，在initiateChannel方法里
             if (NetworkService.NETWORK_SERVER.get(settings)) {
                 for (ProfileSettings profileSettings : profileSettings) {
                     createServerBootstrap(profileSettings, sharedGroup);
@@ -314,7 +314,7 @@ public class Netty4Transport extends TcpTransport {
             NetUtils.tryEnsureReasonableKeepAliveConfig(((Netty4NioSocketChannel) ch).javaChannel());
             ch.pipeline().addLast("logging", new ESLoggingHandler());
             // using a dot as a prefix means this cannot come from any settings parsed
-            ch.pipeline().addLast("dispatcher", new Netty4MessageChannelHandler(pageCacheRecycler, Netty4Transport.this));
+            ch.pipeline().addLast("dispatcher", new Netty4MessageChannelHandler(pageCacheRecycler, Netty4Transport.this));  //自己负责转发
         }
 
         @Override

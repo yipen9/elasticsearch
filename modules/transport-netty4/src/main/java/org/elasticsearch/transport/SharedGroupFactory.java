@@ -54,8 +54,8 @@ public final class SharedGroupFactory {
 
     public SharedGroupFactory(Settings settings) {
         this.settings = settings;
-        this.workerCount = Netty4Transport.WORKER_COUNT.get(settings);
-        this.httpWorkerCount = Netty4HttpServerTransport.SETTING_HTTP_WORKER_COUNT.get(settings);
+        this.workerCount = Netty4Transport.WORKER_COUNT.get(settings);      //worker对应的eventLoopGroup个数
+        this.httpWorkerCount = Netty4HttpServerTransport.SETTING_HTTP_WORKER_COUNT.get(settings);   //httpWorker对应的eventLoopGroup个数，默认是0
     }
 
     public Settings getSettings() {
