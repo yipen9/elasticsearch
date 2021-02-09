@@ -77,7 +77,7 @@ public final class NioGroupFactory {
         }
     }
 
-    private NioGroup getGenericGroup() throws IOException {
+    private NioGroup getGenericGroup() throws IOException { /**创建NioGroup,最终封装为{@link WrappedNioGroup}*/
         if (refCountedGroup == null) {
             ThreadFactory threadFactory = daemonThreadFactory(this.settings, TcpTransport.TRANSPORT_WORKER_THREAD_NAME_PREFIX);
             NioSelectorGroup nioGroup = new NioSelectorGroup(threadFactory, NioTransportPlugin.NIO_WORKER_COUNT.get(settings),

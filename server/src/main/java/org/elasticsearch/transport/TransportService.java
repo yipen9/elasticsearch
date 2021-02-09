@@ -580,7 +580,7 @@ public class TransportService extends AbstractLifecycleComponent
                                                                 TransportResponseHandler<T> handler) {
         final Transport.Connection connection;
         try {
-            connection = getConnection(node);
+            connection = getConnection(node);   //得到connection
         } catch (final NodeNotConnectedException ex) {
             // the caller might not handle this so we invoke the handler
             handler.handleException(ex);
@@ -1327,8 +1327,7 @@ public class TransportService extends AbstractLifecycleComponent
         }
 
         @Override
-        public void onRequestSent(DiscoveryNode node, long requestId, String action, TransportRequest request,
-                                  TransportRequestOptions finalOptions) {
+        public void onRequestSent(DiscoveryNode node, long requestId, String action, TransportRequest request, TransportRequestOptions finalOptions) {
             for (TransportMessageListener listener : listeners) {
                 listener.onRequestSent(node, requestId, action, request, finalOptions);
             }

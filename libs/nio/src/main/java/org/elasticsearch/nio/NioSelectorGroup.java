@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * 一个selectors，一个专门的线程
  * The NioSelectorGroup is a group of selectors for interfacing with java nio. When it is started it will create the
  * configured number of selectors. Each selector will be running in a dedicated thread. Server connections
  * can be bound using the {@link #bindServerChannel(InetSocketAddress, ChannelFactory)} method. Client
@@ -71,11 +72,11 @@ public class NioSelectorGroup implements NioGroup {
      * This will create an NioSelectorGroup with dedicated acceptors. All server channels will be handled by a group
      * of selectors dedicated to accepting channels. These accepted channels will be handed off the
      * non-server selectors.
-     *
+     * 实例NioSelectorGroup的时候就，启动startSelectors线程了
      * @param acceptorThreadFactory factory to create acceptor selector threads
-     * @param dedicatedAcceptorCount the number of dedicated acceptor selectors to be created
+     * @param dedicatedAcceptorCount the number of dedicated acceptor selectors to be created   //专门accept的selector
      * @param selectorThreadFactory factory to create non-acceptor selector threads
-     * @param selectorCount the number of non-acceptor selectors to be created
+     * @param selectorCount the number of non-acceptor selectors to be created  //非accept的selector
      * @param eventHandlerFunction function for creating event handlers
      * @throws IOException occurs if there is a problem while opening a java.nio.Selector
      */
@@ -156,7 +157,7 @@ public class NioSelectorGroup implements NioGroup {
     private static void startSelectors(Iterable<NioSelector> selectors, ThreadFactory threadFactory) {
         for (NioSelector selector : selectors) {
             if (selector.isRunning() == false) {
-                threadFactory.newThread(selector::runLoop).start();
+                threadFactory.newThread(selector::runLoop).start(); //一个NioSelector对应一个线程
                 try {
                     selector.isRunningFuture().get();
                 } catch (InterruptedException e) {

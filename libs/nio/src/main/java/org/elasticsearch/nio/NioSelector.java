@@ -126,7 +126,7 @@ public class NioSelector implements Closeable {
         if (runLock.tryLock()) {
             isRunningFuture.complete(null);
             try {
-                setThread();
+                setThread();    //设置当前线程
                 while (isOpen()) {
                     singleLoop();
                 }
@@ -152,7 +152,7 @@ public class NioSelector implements Closeable {
     void singleLoop() {
         try {
             closePendingChannels();
-            preSelect();
+            preSelect();    //开始处理
             long nanosUntilNextTask = taskScheduler.nanosUntilNextTask(System.nanoTime());
             int ready;
             if (wokenUp.getAndSet(false) || nanosUntilNextTask == 0) {
@@ -322,8 +322,8 @@ public class NioSelector implements Closeable {
         ChannelContext<?> context = channel.getContext();
         if (isOnCurrentThread() == false) {
             channelsToRegister.add(context);
-            ensureSelectorOpenForEnqueuing(channelsToRegister, context);
-            wakeup();
+            ensureSelectorOpenForEnqueuing(channelsToRegister, context); //确保select，isClosed没有关闭
+            wakeup();   //唤醒Selector，开始执行preSelect
         } else {
             registerChannel(context);
         }

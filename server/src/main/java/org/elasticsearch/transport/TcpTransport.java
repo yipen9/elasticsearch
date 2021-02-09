@@ -198,7 +198,7 @@ public abstract class TcpTransport extends AbstractLifecycleComponent implements
     }
 
     @Override
-    public void setSlowLogThreshold(TimeValue slowLogThreshold) {//甚至慢日志的阀值
+    public void setSlowLogThreshold(TimeValue slowLogThreshold) {//设置慢日志的阀值
         inboundHandler.setSlowLogThreshold(slowLogThreshold);
     }
 
@@ -379,7 +379,7 @@ public abstract class TcpTransport extends AbstractLifecycleComponent implements
 
         List<InetSocketAddress> boundAddresses = new ArrayList<>();
         for (InetAddress hostAddress : hostAddresses) {
-            boundAddresses.add(bindToPort(profileSettings.profileName, hostAddress, profileSettings.portOrRange));
+            boundAddresses.add(bindToPort(profileSettings.profileName, hostAddress, profileSettings.portOrRange));  //启动serverChannel
         }
 
         final BoundTransportAddress boundTransportAddress = createBoundTransportAddress(profileSettings, boundAddresses);

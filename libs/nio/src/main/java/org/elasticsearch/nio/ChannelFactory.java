@@ -28,6 +28,11 @@ import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import java.util.function.Supplier;
 
+/**
+ * ChannelFactory工程类
+ * @param <ServerSocket>
+ * @param <Socket>
+ */
 public abstract class ChannelFactory<ServerSocket extends NioServerSocketChannel, Socket extends NioSocketChannel> {
 
     private final boolean tcpNoDelay;
@@ -70,8 +75,9 @@ public abstract class ChannelFactory<ServerSocket extends NioServerSocketChannel
         SocketChannel rawChannel = rawChannelFactory.openNioChannel();
         setNonBlocking(rawChannel);
         NioSelector selector = supplier.get();
+        /**生成{@link NioSocketChannel}，同时必须有{@link SocketChannelContext}*/
         Socket channel = internalCreateChannel(selector, rawChannel, createSocketConfig(remoteAddress, false));
-        scheduleChannel(channel, selector);
+        scheduleChannel(channel, selector); /**最终会调用 {@link SocketChannelContext#register()}*/
         return channel;
     }
 
@@ -98,7 +104,7 @@ public abstract class ChannelFactory<ServerSocket extends NioServerSocketChannel
      * This method should return a new {@link NioSocketChannel} implementation. When this method has
      * returned, the channel should be fully created and setup. Read and write contexts and the channel
      * exception handler should have been set.
-     *
+     * 由实现类
      * @param selector     the channel will be registered with
      * @param channel      the raw channel
      * @param socketConfig the socket config
@@ -194,6 +200,9 @@ public abstract class ChannelFactory<ServerSocket extends NioServerSocketChannel
             tcpReceiveBufferSize, remoteAddress, isAccepted);
     }
 
+    /**
+     * java对应nio的ServerSocketChannel和SocketChannel工厂
+     */
     public static class RawChannelFactory {
 
         SocketChannel openNioChannel() throws IOException {

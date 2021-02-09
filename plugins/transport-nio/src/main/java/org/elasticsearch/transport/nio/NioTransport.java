@@ -37,6 +37,7 @@ import org.elasticsearch.nio.Config;
 import org.elasticsearch.nio.InboundChannelBuffer;
 import org.elasticsearch.nio.NioGroup;
 import org.elasticsearch.nio.NioSelector;
+import org.elasticsearch.nio.NioSelectorGroup;
 import org.elasticsearch.nio.NioSocketChannel;
 import org.elasticsearch.nio.ServerChannelContext;
 import org.elasticsearch.threadpool.ThreadPool;
@@ -91,10 +92,10 @@ public class NioTransport extends TcpTransport {
     protected void doStart() {
         boolean success = false;
         try {
-            nioGroup = groupFactory.getTransportGroup();
+            nioGroup = groupFactory.getTransportGroup();    /**实例化nioGroup的时候，已经启动了selector指定的线程 {@link NioSelectorGroup#startSelectors}*/
 
             ProfileSettings clientProfileSettings = new ProfileSettings(settings, TransportSettings.DEFAULT_PROFILE);
-            clientChannelFactory = clientChannelFactoryFunction(clientProfileSettings);
+            clientChannelFactory = clientChannelFactoryFunction(clientProfileSettings); //客户端channel的创建TcpChannelFactoryImpl
 
             if (NetworkService.NETWORK_SERVER.get(settings)) {
                 // loop through all profiles and start them up, special handling for default one
@@ -102,7 +103,7 @@ public class NioTransport extends TcpTransport {
                     String profileName = profileSettings.profileName;
                     TcpChannelFactory factory = serverChannelFactory(profileSettings);
                     profileToChannelFactory.putIfAbsent(profileName, factory);
-                    bindServer(profileSettings);
+                    bindServer(profileSettings);    /**{@link TcpTransport} 初始化boundAddress*/
                 }
             }
 
