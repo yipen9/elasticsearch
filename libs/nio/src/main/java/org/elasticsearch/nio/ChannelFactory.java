@@ -30,8 +30,6 @@ import java.util.function.Supplier;
 
 /**
  * ChannelFactory工程类
- * @param <ServerSocket>
- * @param <Socket>
  */
 public abstract class ChannelFactory<ServerSocket extends NioServerSocketChannel, Socket extends NioSocketChannel> {
 
