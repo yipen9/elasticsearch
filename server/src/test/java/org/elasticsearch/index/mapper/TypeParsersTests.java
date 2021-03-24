@@ -80,7 +80,7 @@ public class TypeParsersTests extends ESTestCase {
         MapperService mapperService = mock(MapperService.class);
         IndexAnalyzers indexAnalyzers = new IndexAnalyzers(defaultAnalyzers(), Collections.emptyMap(), Collections.emptyMap());
         when(mapperService.getIndexAnalyzers()).thenReturn(indexAnalyzers);
-        Version olderVersion = VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_8_0_0);
+        Version olderVersion = VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_7_11_0);
         Mapper.TypeParser.ParserContext olderContext = new Mapper.TypeParser.ParserContext(null, type -> typeParser, type -> null,
             olderVersion, null, null, null, mapperService.getIndexAnalyzers(), mapperService.getIndexSettings(), () -> {
             throw new UnsupportedOperationException();
@@ -97,7 +97,7 @@ public class TypeParsersTests extends ESTestCase {
         Map<String, Object> fieldNodeCopy = XContentHelper.convertToMap(
             BytesReference.bytes(mapping), true, mapping.contentType()).v2();
 
-        Version version = VersionUtils.randomVersionBetween(random(), Version.V_8_0_0, Version.CURRENT);
+        Version version = VersionUtils.randomVersionBetween(random(), Version.V_7_11_0, Version.CURRENT);
         Mapper.TypeParser.ParserContext context = new Mapper.TypeParser.ParserContext(null, type -> typeParser, type -> null, version,
             null, null, null, mapperService.getIndexAnalyzers(), mapperService.getIndexSettings(), () -> {
             throw new UnsupportedOperationException();

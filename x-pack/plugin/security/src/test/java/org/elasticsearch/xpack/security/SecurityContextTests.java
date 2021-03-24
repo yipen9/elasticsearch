@@ -145,7 +145,7 @@ public class SecurityContextTests extends ESTestCase {
             API_KEY_ROLE_DESCRIPTORS_KEY, new BytesArray("{\"a role\": {\"cluster\": [\"all\"]}}"),
             API_KEY_LIMITED_ROLE_DESCRIPTORS_KEY, new BytesArray("{\"limitedBy role\": {\"cluster\": [\"all\"]}}")
         );
-        final Authentication original = new Authentication(user, authBy, authBy, Version.V_8_0_0,
+        final Authentication original = new Authentication(user, authBy, authBy, Version.V_7_11_0,
             AuthenticationType.API_KEY, metadata);
         original.writeToContext(threadContext);
 

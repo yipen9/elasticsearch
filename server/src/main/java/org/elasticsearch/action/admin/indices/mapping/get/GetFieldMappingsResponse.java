@@ -61,7 +61,7 @@ public class GetFieldMappingsResponse extends ActionResponse implements ToXConte
     GetFieldMappingsResponse(StreamInput in) throws IOException {
         super(in);
         mappings = unmodifiableMap(in.readMap(StreamInput::readString, mapIn -> {
-            if (mapIn.getVersion().before(Version.V_8_0_0)) {
+            if (mapIn.getVersion().before(Version.V_7_11_0)) {
                 int typesSize = mapIn.readVInt();
                 assert typesSize == 1 || typesSize == 0 : "Expected 0 or 1 types but got " + typesSize;
                 if (typesSize == 0) {
@@ -189,7 +189,7 @@ public class GetFieldMappingsResponse extends ActionResponse implements ToXConte
     @Override
     public void writeTo(StreamOutput out) throws IOException {
         out.writeMap(mappings, StreamOutput::writeString, (outpt, map) -> {
-            if (outpt.getVersion().before(Version.V_8_0_0)) {
+            if (outpt.getVersion().before(Version.V_7_11_0)) {
                 outpt.writeVInt(1);
                 outpt.writeString(MapperService.SINGLE_MAPPING_NAME);
             }

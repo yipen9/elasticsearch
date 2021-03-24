@@ -226,7 +226,7 @@ public class LocalAllocateDangledIndices {
     public static class AllocateDangledResponse extends TransportResponse {
 
         private AllocateDangledResponse(StreamInput in) throws IOException {
-            if (in.getVersion().before(Version.V_8_0_0)) {
+            if (in.getVersion().before(Version.V_7_11_0)) {
                 in.readBoolean();
             }
         }
@@ -236,7 +236,7 @@ public class LocalAllocateDangledIndices {
 
         @Override
         public void writeTo(StreamOutput out) throws IOException {
-            if (out.getVersion().before(Version.V_8_0_0)) {
+            if (out.getVersion().before(Version.V_7_11_0)) {
                 out.writeBoolean(true);
             }
         }

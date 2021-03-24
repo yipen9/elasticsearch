@@ -1201,7 +1201,7 @@ public class Translog extends AbstractIndexShardComponent implements IndexShardC
         }
 
         private void write(final StreamOutput out) throws IOException {
-            final int format = out.getVersion().onOrAfter(Version.V_8_0_0) ? SERIALIZATION_FORMAT : FORMAT_NO_VERSION_TYPE;
+            final int format = out.getVersion().onOrAfter(Version.V_7_11_0) ? SERIALIZATION_FORMAT : FORMAT_NO_VERSION_TYPE;
             out.writeVInt(format);
             out.writeString(id);
             if (format < FORMAT_NO_DOC_TYPE) {
@@ -1361,7 +1361,7 @@ public class Translog extends AbstractIndexShardComponent implements IndexShardC
         }
 
         private void write(final StreamOutput out) throws IOException {
-            final int format = out.getVersion().onOrAfter(Version.V_8_0_0) ? SERIALIZATION_FORMAT : FORMAT_NO_VERSION_TYPE;
+            final int format = out.getVersion().onOrAfter(Version.V_7_11_0) ? SERIALIZATION_FORMAT : FORMAT_NO_VERSION_TYPE;
             out.writeVInt(format);
             if (format < FORMAT_NO_DOC_TYPE) {
                 out.writeString(MapperService.SINGLE_MAPPING_NAME);

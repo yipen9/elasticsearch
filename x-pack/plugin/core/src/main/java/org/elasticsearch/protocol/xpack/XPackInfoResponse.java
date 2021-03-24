@@ -340,7 +340,7 @@ public class XPackInfoResponse extends ActionResponse implements ToXContentObjec
 
             public FeatureSet(StreamInput in) throws IOException {
                 this(in.readString(), readAvailable(in), in.readBoolean());
-                if (in.getVersion().before(Version.V_8_0_0)) {
+                if (in.getVersion().before(Version.V_7_11_0)) {
                     in.readMap(); // backcompat reading native code info, but no longer used here
                 }
             }
@@ -362,7 +362,7 @@ public class XPackInfoResponse extends ActionResponse implements ToXContentObjec
                 }
                 out.writeBoolean(available);
                 out.writeBoolean(enabled);
-                if (out.getVersion().before(Version.V_8_0_0)) {
+                if (out.getVersion().before(Version.V_7_11_0)) {
                     out.writeMap(Collections.emptyMap());
                 }
             }

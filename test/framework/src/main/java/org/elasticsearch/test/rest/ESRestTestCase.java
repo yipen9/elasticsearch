@@ -1438,12 +1438,12 @@ public abstract class ESRestTestCase extends ESTestCase {
         final List<String> transitionMessages = List.of(
             "Synced flush was removed and a normal flush was performed instead. This transition will be removed in a future version.");
         final WarningsHandler warningsHandler;
-        if (minimumNodeVersion().onOrAfter(Version.V_8_0_0)) {
+        if (minimumNodeVersion().onOrAfter(Version.V_7_11_0)) {
             warningsHandler = warnings -> warnings.equals(transitionMessages) == false;
         } else if (minimumNodeVersion().onOrAfter(Version.V_7_6_0)) {
             warningsHandler = warnings -> warnings.equals(deprecationMessages) == false && warnings.equals(transitionMessages) == false &&
                 warnings.equals(fixedDeprecationMessages) == false;
-        } else if (nodeVersions.stream().anyMatch(n -> n.onOrAfter(Version.V_8_0_0))) {
+        } else if (nodeVersions.stream().anyMatch(n -> n.onOrAfter(Version.V_7_11_0))) {
             warningsHandler = warnings -> warnings.isEmpty() == false && warnings.equals(transitionMessages) == false;
         } else {
             warningsHandler = warnings -> warnings.isEmpty() == false;
@@ -1455,7 +1455,7 @@ public abstract class ESRestTestCase extends ESTestCase {
                 final Request request = new Request("POST", indexName + "/_flush/synced");
                 request.setOptions(RequestOptions.DEFAULT.toBuilder().setWarningsHandler(warningsHandler));
                 Response resp = client().performRequest(request);
-                if (nodeVersions.stream().allMatch(v -> v.before(Version.V_8_0_0))) {
+                if (nodeVersions.stream().allMatch(v -> v.before(Version.V_7_11_0))) {
                     Map<String, Object> result = ObjectPath.createFromResponse(resp).evaluate("_shards");
                     assertThat(result.get("failed"), equalTo(0));
                 }

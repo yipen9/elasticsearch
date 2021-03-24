@@ -901,7 +901,7 @@ public class MetadataCreateIndexServiceTests extends ESTestCase {
         }
         if (randomBoolean()) {
             settings.put(SETTING_VERSION_CREATED,
-                VersionUtils.randomVersionBetween(random(), Version.V_8_0_0, Version.CURRENT));
+                VersionUtils.randomVersionBetween(random(), Version.V_7_11_0, Version.CURRENT));
         }
         request.settings(settings.build());
         IllegalArgumentException error = expectThrows(IllegalArgumentException.class,
@@ -920,7 +920,7 @@ public class MetadataCreateIndexServiceTests extends ESTestCase {
         } else {
             settings.put(IndexSettings.INDEX_TRANSLOG_RETENTION_SIZE_SETTING.getKey(), between(1, 128) + "mb");
         }
-        settings.put(SETTING_VERSION_CREATED, VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_8_0_0));
+        settings.put(SETTING_VERSION_CREATED, VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_7_11_0));
         request.settings(settings.build());
         aggregateIndexSettings(ClusterState.EMPTY_STATE, request, Settings.EMPTY,
             null, Settings.EMPTY, IndexScopedSettings.DEFAULT_SCOPED_SETTINGS, randomShardLimitService(),

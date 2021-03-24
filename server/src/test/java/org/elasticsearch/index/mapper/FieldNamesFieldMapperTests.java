@@ -123,7 +123,7 @@ public class FieldNamesFieldMapperTests extends ESSingleNodeTestCase {
         DocumentMapper docMapper = createIndex("test",
                 Settings.builder()
                         .put(IndexMetadata.SETTING_VERSION_CREATED,
-                                VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_8_0_0))
+                                VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_7_11_0))
                         .build()).mapperService()
             .parse("type", new CompressedXContent(mapping));
         FieldNamesFieldMapper fieldNamesMapper = docMapper.metadataMapper(FieldNamesFieldMapper.class);
@@ -152,7 +152,7 @@ public class FieldNamesFieldMapperTests extends ESSingleNodeTestCase {
             .endObject().endObject());
         MapperService mapperService = createIndex("test", Settings.builder()
                 .put(IndexMetadata.SETTING_VERSION_CREATED,
-                        VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_8_0_0))
+                        VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_7_11_0))
                 .build()).mapperService();
 
         mapperService.merge("type", new CompressedXContent(enabledMapping), MapperService.MergeReason.MAPPING_UPDATE);

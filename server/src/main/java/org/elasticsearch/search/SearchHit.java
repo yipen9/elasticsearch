@@ -144,7 +144,7 @@ public final class SearchHit implements Writeable, ToXContentObject, Iterable<Do
         docId = -1;
         score = in.readFloat();
         id = in.readOptionalText();
-        if (in.getVersion().before(Version.V_8_0_0)) {
+        if (in.getVersion().before(Version.V_7_11_0)) {
             in.readOptionalText();
         }
         nestedIdentity = in.readOptionalWriteable(NestedIdentity::new);
@@ -247,7 +247,7 @@ public final class SearchHit implements Writeable, ToXContentObject, Iterable<Do
     public void writeTo(StreamOutput out) throws IOException {
         out.writeFloat(score);
         out.writeOptionalText(id);
-        if (out.getVersion().before(Version.V_8_0_0)) {
+        if (out.getVersion().before(Version.V_7_11_0)) {
             out.writeOptionalText(SINGLE_MAPPING_TYPE);
         }
         out.writeOptionalWriteable(nestedIdentity);

@@ -411,7 +411,7 @@ public class ParametrizedMapperTests extends MapperServiceTestCase {
         assertFalse(mapper.index);
         assertEquals("{\"field\":{\"type\":\"test_mapper\",\"index\":false,\"required\":\"value\"}}", Strings.toString(mapper));
 
-        MapperParsingException e = expectThrows(MapperParsingException.class, () -> fromMapping(mapping, Version.V_8_0_0));
+        MapperParsingException e = expectThrows(MapperParsingException.class, () -> fromMapping(mapping, Version.V_7_11_0));
         assertEquals("unknown parameter [store] on mapper [field] of type [test_mapper]", e.getMessage());
     }
 

@@ -99,7 +99,7 @@ public class Header {
         this.headers = ThreadContext.readHeadersFromStream(input);
 
         if (isRequest()) {
-            if (version.before(Version.V_8_0_0)) {
+            if (version.before(Version.V_7_11_0)) {
                 // discard features
                 input.readStringArray();
             }

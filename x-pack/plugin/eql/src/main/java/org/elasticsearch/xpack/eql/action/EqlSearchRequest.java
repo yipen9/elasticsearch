@@ -97,7 +97,7 @@ public class EqlSearchRequest extends ActionRequest implements IndicesRequest.Re
         size = in.readVInt();
         fetchSize = in.readVInt();
         query = in.readString();
-        if (in.getVersion().onOrAfter(Version.V_8_0_0)) { // TODO: Remove after backport
+        if (in.getVersion().onOrAfter(Version.V_7_11_0)) { // TODO: Remove after backport
             this.waitForCompletionTimeout = in.readOptionalTimeValue();
             this.keepAlive = in.readOptionalTimeValue();
             this.keepOnCompletion = in.readBoolean();
@@ -314,7 +314,7 @@ public class EqlSearchRequest extends ActionRequest implements IndicesRequest.Re
         out.writeVInt(size);
         out.writeVInt(fetchSize);
         out.writeString(query);
-        if (out.getVersion().onOrAfter(Version.V_8_0_0)) { // TODO: Remove after backport
+        if (out.getVersion().onOrAfter(Version.V_7_11_0)) { // TODO: Remove after backport
             out.writeOptionalTimeValue(waitForCompletionTimeout);
             out.writeOptionalTimeValue(keepAlive);
             out.writeBoolean(keepOnCompletion);

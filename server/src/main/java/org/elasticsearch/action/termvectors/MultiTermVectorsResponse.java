@@ -50,7 +50,7 @@ public class MultiTermVectorsResponse extends ActionResponse implements Iterable
 
         public Failure(StreamInput in) throws IOException {
             index = in.readString();
-            if (in.getVersion().before(Version.V_8_0_0)) {
+            if (in.getVersion().before(Version.V_7_11_0)) {
                 // types no longer relevant so ignore
                 String type = in.readOptionalString();
                 if (type != null) {
@@ -85,7 +85,7 @@ public class MultiTermVectorsResponse extends ActionResponse implements Iterable
         @Override
         public void writeTo(StreamOutput out) throws IOException {
             out.writeString(index);
-            if (out.getVersion().before(Version.V_8_0_0)) {
+            if (out.getVersion().before(Version.V_7_11_0)) {
                 // types not supported so send an empty array to previous versions
                 out.writeOptionalString(null);
             }

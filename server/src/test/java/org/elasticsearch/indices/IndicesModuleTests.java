@@ -88,7 +88,7 @@ public class IndicesModuleTests extends ESTestCase {
         IndicesModule module = new IndicesModule(Collections.emptyList());
         {
             Version version = VersionUtils.randomVersionBetween(random(),
-                Version.V_8_0_0, Version.CURRENT);
+                Version.V_7_11_0, Version.CURRENT);
             assertFalse(module.getMapperRegistry().getMapperParsers().isEmpty());
             assertFalse(module.getMapperRegistry().getMetadataMapperParsers(version).isEmpty());
             Map<String, MetadataFieldMapper.TypeParser> metadataMapperParsers =
@@ -101,7 +101,7 @@ public class IndicesModuleTests extends ESTestCase {
         }
         {
             Version version = VersionUtils.randomVersionBetween(random(),
-                Version.V_7_0_0, VersionUtils.getPreviousVersion(Version.V_8_0_0));
+                Version.V_7_0_0, VersionUtils.getPreviousVersion(Version.V_7_11_0));
             assertEquals(EXPECTED_METADATA_FIELDS.length - 1, module.getMapperRegistry().getMetadataMapperParsers(version).size());
         }
     }

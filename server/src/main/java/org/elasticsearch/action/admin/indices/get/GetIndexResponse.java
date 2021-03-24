@@ -78,7 +78,7 @@ public class GetIndexResponse extends ActionResponse implements ToXContentObject
     GetIndexResponse(StreamInput in) throws IOException {
         super(in);
         this.indices = in.readStringArray();
-        mappings = in.readImmutableMap(StreamInput::readString, in.getVersion().before(Version.V_8_0_0) ? i -> {
+        mappings = in.readImmutableMap(StreamInput::readString, in.getVersion().before(Version.V_7_11_0) ? i -> {
                     int numMappings = i.readVInt();
                     assert numMappings == 0 || numMappings == 1 : "Expected 0 or 1 mappings but got " + numMappings;
                     if (numMappings == 1) {

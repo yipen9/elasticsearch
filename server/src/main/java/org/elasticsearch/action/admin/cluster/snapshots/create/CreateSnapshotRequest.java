@@ -63,7 +63,7 @@ import static org.elasticsearch.common.xcontent.support.XContentMapValues.nodeBo
 public class CreateSnapshotRequest extends MasterNodeRequest<CreateSnapshotRequest>
         implements IndicesRequest.Replaceable, ToXContentObject {
 
-    public static final Version SETTINGS_IN_REQUEST_VERSION = Version.V_8_0_0;
+    public static final Version SETTINGS_IN_REQUEST_VERSION = Version.V_7_11_0;
 
     public static int MAXIMUM_METADATA_BYTES = 1024; // chosen arbitrarily
 

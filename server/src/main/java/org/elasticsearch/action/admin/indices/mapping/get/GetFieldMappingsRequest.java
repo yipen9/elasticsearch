@@ -52,7 +52,7 @@ public class GetFieldMappingsRequest extends ActionRequest implements IndicesReq
     public GetFieldMappingsRequest(StreamInput in) throws IOException {
         super(in);
         indices = in.readStringArray();
-        if (in.getVersion().before(Version.V_8_0_0)) {
+        if (in.getVersion().before(Version.V_7_11_0)) {
             String[] types = in.readStringArray();
             if (types != Strings.EMPTY_ARRAY) {
                 throw new IllegalArgumentException("Expected empty type array but received [" + Arrays.toString(types) + "]");
@@ -61,7 +61,7 @@ public class GetFieldMappingsRequest extends ActionRequest implements IndicesReq
         }
         indicesOptions = IndicesOptions.readIndicesOptions(in);
         // Consume the deprecated local parameter
-        if (in.getVersion().before(Version.V_8_0_0)) {
+        if (in.getVersion().before(Version.V_7_11_0)) {
             in.readBoolean();
         }
         fields = in.readStringArray();
@@ -123,11 +123,11 @@ public class GetFieldMappingsRequest extends ActionRequest implements IndicesReq
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);
         out.writeStringArray(indices);
-        if (out.getVersion().before(Version.V_8_0_0)) {
+        if (out.getVersion().before(Version.V_7_11_0)) {
             out.writeStringArray(Strings.EMPTY_ARRAY);
         }
         indicesOptions.writeIndicesOptions(out);
-        if (out.getVersion().before(Version.V_8_0_0)) {
+        if (out.getVersion().before(Version.V_7_11_0)) {
             out.writeBoolean(true);
         }
         out.writeStringArray(fields);

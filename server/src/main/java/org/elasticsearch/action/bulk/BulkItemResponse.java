@@ -233,7 +233,7 @@ public class BulkItemResponse implements Writeable, StatusToXContentObject {
          */
         public Failure(StreamInput in) throws IOException {
             index = in.readString();
-            if (in.getVersion().before(Version.V_8_0_0)) {
+            if (in.getVersion().before(Version.V_7_11_0)) {
                 in.readString();
                 // can't make an assertion about type names here because too many tests still set their own
                 // types bypassing various checks
@@ -249,7 +249,7 @@ public class BulkItemResponse implements Writeable, StatusToXContentObject {
         @Override
         public void writeTo(StreamOutput out) throws IOException {
             out.writeString(index);
-            if (out.getVersion().before(Version.V_8_0_0)) {
+            if (out.getVersion().before(Version.V_7_11_0)) {
                 out.writeString(MapperService.SINGLE_MAPPING_NAME);
             }
             out.writeOptionalString(id);

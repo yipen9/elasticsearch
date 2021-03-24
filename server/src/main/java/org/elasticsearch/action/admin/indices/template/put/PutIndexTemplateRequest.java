@@ -90,7 +90,7 @@ public class PutIndexTemplateRequest extends MasterNodeRequest<PutIndexTemplateR
         order = in.readInt();
         create = in.readBoolean();
         settings = readSettingsFromStream(in);
-        if (in.getVersion().before(Version.V_8_0_0)) {
+        if (in.getVersion().before(Version.V_7_11_0)) {
             int size = in.readVInt();
             for (int i = 0; i < size; i++) {
                 in.readString();    // type - cannot assert on _doc because 7x allows arbitrary type names
@@ -460,7 +460,7 @@ public class PutIndexTemplateRequest extends MasterNodeRequest<PutIndexTemplateR
         out.writeInt(order);
         out.writeBoolean(create);
         writeSettingsToStream(settings, out);
-        if (out.getVersion().before(Version.V_8_0_0)) {
+        if (out.getVersion().before(Version.V_7_11_0)) {
             out.writeVInt(mappings == null ? 0 : 1);
             if (mappings != null) {
                 out.writeString(MapperService.SINGLE_MAPPING_NAME);

@@ -246,7 +246,7 @@ public class MapperServiceTests extends MapperServiceTestCase {
         assertFalse(mapperService.isMetadataField(randomAlphaOfLengthBetween(10, 15)));
 
         for (String builtIn : IndicesModule.getBuiltInMetadataFields()) {
-            if (NestedPathFieldMapper.NAME.equals(builtIn) && version.before(Version.V_8_0_0)) {
+            if (NestedPathFieldMapper.NAME.equals(builtIn) && version.before(Version.V_7_11_0)) {
                 continue;   // Nested field does not exist in the 7x line
             }
             assertTrue("Expected " + builtIn + " to be a metadata field for version " + version,

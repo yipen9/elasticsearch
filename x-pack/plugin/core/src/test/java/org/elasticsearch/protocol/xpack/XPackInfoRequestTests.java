@@ -27,8 +27,8 @@ public class XPackInfoRequestTests extends ESTestCase {
         // At the time of writing, V7.8.1 is unreleased, so there's no easy way to use VersionUtils to get a random version between
         // 7.8.1 (inclusive) and 8.0.0 (exclusive), because the "version before 8.0.0" returns 7.8.0 (the most recent released version).
         // To work around this we accept that 8.0.0 is included in the range, and then filter it out using other-than
-        final Version version = randomValueOtherThan(Version.V_8_0_0,
-            () -> VersionUtils.randomVersionBetween(random(), Version.V_7_8_1, Version.V_8_0_0));
+        final Version version = randomValueOtherThan(Version.V_7_11_0,
+            () -> VersionUtils.randomVersionBetween(random(), Version.V_7_8_1, Version.V_7_11_0));
         assertSerialization(version);
     }
 

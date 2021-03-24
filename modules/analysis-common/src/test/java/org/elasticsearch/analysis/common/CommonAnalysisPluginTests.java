@@ -41,7 +41,7 @@ public class CommonAnalysisPluginTests extends ESTestCase {
     public void testNGramFilterInCustomAnalyzerDeprecationError() throws IOException {
         final Settings settings = Settings.builder().put(Environment.PATH_HOME_SETTING.getKey(), createTempDir())
             .put(IndexMetadata.SETTING_VERSION_CREATED,
-                VersionUtils.randomVersionBetween(random(), Version.V_8_0_0, Version.CURRENT))
+                VersionUtils.randomVersionBetween(random(), Version.V_7_11_0, Version.CURRENT))
             .put("index.analysis.analyzer.custom_analyzer.type", "custom")
             .put("index.analysis.analyzer.custom_analyzer.tokenizer", "standard")
             .putList("index.analysis.analyzer.custom_analyzer.filter", "my_ngram")
@@ -75,7 +75,7 @@ public class CommonAnalysisPluginTests extends ESTestCase {
     public void testEdgeNGramFilterInCustomAnalyzerDeprecationError() throws IOException {
         final Settings settings = Settings.builder().put(Environment.PATH_HOME_SETTING.getKey(), createTempDir())
             .put(IndexMetadata.SETTING_VERSION_CREATED,
-                VersionUtils.randomVersionBetween(random(), Version.V_8_0_0, Version.CURRENT))
+                VersionUtils.randomVersionBetween(random(), Version.V_7_11_0, Version.CURRENT))
             .put("index.analysis.analyzer.custom_analyzer.type", "custom")
             .put("index.analysis.analyzer.custom_analyzer.tokenizer", "standard")
             .putList("index.analysis.analyzer.custom_analyzer.filter", "my_ngram")
@@ -118,15 +118,15 @@ public class CommonAnalysisPluginTests extends ESTestCase {
                 VersionUtils.randomVersionBetween(random(), Version.V_7_0_0, Version.V_7_5_2), false);
         doTestPrebuiltTokenizerDeprecation("nGram", "ngram",
                 VersionUtils.randomVersionBetween(random(), Version.V_7_6_0,
-                        Version.max(Version.V_7_6_0, VersionUtils.getPreviousVersion(Version.V_8_0_0))),
+                        Version.max(Version.V_7_6_0, VersionUtils.getPreviousVersion(Version.V_7_11_0))),
                 true);
         doTestPrebuiltTokenizerDeprecation("edgeNGram", "edge_ngram",
                 VersionUtils.randomVersionBetween(random(), Version.V_7_6_0,
-                        Version.max(Version.V_7_6_0, VersionUtils.getPreviousVersion(Version.V_8_0_0))), true);
+                        Version.max(Version.V_7_6_0, VersionUtils.getPreviousVersion(Version.V_7_11_0))), true);
         expectThrows(IllegalArgumentException.class, () -> doTestPrebuiltTokenizerDeprecation("nGram", "ngram",
-                VersionUtils.randomVersionBetween(random(), Version.V_8_0_0, Version.CURRENT), true));
+                VersionUtils.randomVersionBetween(random(), Version.V_7_11_0, Version.CURRENT), true));
         expectThrows(IllegalArgumentException.class, () -> doTestPrebuiltTokenizerDeprecation("edgeNGram", "edge_ngram",
-                VersionUtils.randomVersionBetween(random(), Version.V_8_0_0, Version.CURRENT), true));
+                VersionUtils.randomVersionBetween(random(), Version.V_7_11_0, Version.CURRENT), true));
 
         // same batch of tests for custom tokenizer definition in the settings
         doTestCustomTokenizerDeprecation("nGram", "ngram",
@@ -135,15 +135,15 @@ public class CommonAnalysisPluginTests extends ESTestCase {
                 VersionUtils.randomVersionBetween(random(), Version.V_7_0_0, Version.V_7_5_2), false);
         doTestCustomTokenizerDeprecation("nGram", "ngram",
                 VersionUtils.randomVersionBetween(random(), Version.V_7_6_0,
-                        Version.max(Version.V_7_6_0, VersionUtils.getPreviousVersion(Version.V_8_0_0))),
+                        Version.max(Version.V_7_6_0, VersionUtils.getPreviousVersion(Version.V_7_11_0))),
                 true);
         doTestCustomTokenizerDeprecation("edgeNGram", "edge_ngram",
                 VersionUtils.randomVersionBetween(random(), Version.V_7_6_0,
-                        Version.max(Version.V_7_6_0, VersionUtils.getPreviousVersion(Version.V_8_0_0))), true);
+                        Version.max(Version.V_7_6_0, VersionUtils.getPreviousVersion(Version.V_7_11_0))), true);
         expectThrows(IllegalArgumentException.class, () -> doTestCustomTokenizerDeprecation("nGram", "ngram",
-                VersionUtils.randomVersionBetween(random(), Version.V_8_0_0, Version.CURRENT), true));
+                VersionUtils.randomVersionBetween(random(), Version.V_7_11_0, Version.CURRENT), true));
         expectThrows(IllegalArgumentException.class, () -> doTestCustomTokenizerDeprecation("edgeNGram", "edge_ngram",
-                VersionUtils.randomVersionBetween(random(), Version.V_8_0_0, Version.CURRENT), true));
+                VersionUtils.randomVersionBetween(random(), Version.V_7_11_0, Version.CURRENT), true));
     }
 
     public void doTestPrebuiltTokenizerDeprecation(String deprecatedName, String replacement, Version version, boolean expectWarning)

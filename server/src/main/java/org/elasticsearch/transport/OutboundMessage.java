@@ -111,7 +111,7 @@ abstract class OutboundMessage extends NetworkMessage {
         @Override
         protected void writeVariableHeader(StreamOutput stream) throws IOException {
             super.writeVariableHeader(stream);
-            if (version.before(Version.V_8_0_0)) {
+            if (version.before(Version.V_7_11_0)) {
                 // empty features array
                 stream.writeStringArray(Strings.EMPTY_ARRAY);
             }

@@ -59,7 +59,7 @@ public class CommonStatsFlags implements Writeable, Cloneable {
                 flags.add(flag);
             }
         }
-        if (in.getVersion().before(Version.V_8_0_0)) {
+        if (in.getVersion().before(Version.V_7_11_0)) {
             in.readStringArray();
         }
         groups = in.readStringArray();
@@ -79,7 +79,7 @@ public class CommonStatsFlags implements Writeable, Cloneable {
         }
         out.writeLong(longFlags);
 
-        if (out.getVersion().before(Version.V_8_0_0)) {
+        if (out.getVersion().before(Version.V_7_11_0)) {
             out.writeStringArrayNullable(Strings.EMPTY_ARRAY);
         }
         out.writeStringArrayNullable(groups);

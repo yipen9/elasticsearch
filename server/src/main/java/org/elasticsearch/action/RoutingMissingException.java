@@ -52,7 +52,7 @@ public class RoutingMissingException extends ElasticsearchException {
 
     public RoutingMissingException(StreamInput in) throws IOException{
         super(in);
-        if (in.getVersion().before(Version.V_8_0_0)) {
+        if (in.getVersion().before(Version.V_7_11_0)) {
             in.readString();
         }
         id = in.readString();
@@ -61,7 +61,7 @@ public class RoutingMissingException extends ElasticsearchException {
     @Override
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);
-        if (out.getVersion().before(Version.V_8_0_0)) {
+        if (out.getVersion().before(Version.V_7_11_0)) {
             out.writeString(MapperService.SINGLE_MAPPING_NAME);
         }
         out.writeString(id);

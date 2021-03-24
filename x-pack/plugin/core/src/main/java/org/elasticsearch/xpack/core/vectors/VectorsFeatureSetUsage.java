@@ -25,7 +25,7 @@ public class VectorsFeatureSetUsage extends XPackFeatureSet.Usage {
         super(input);
         numDenseVectorFields = input.readVInt();
         // Older versions recorded the number of sparse vector fields.
-        if (input.getVersion().before(Version.V_8_0_0)) {
+        if (input.getVersion().before(Version.V_7_11_0)) {
             input.readVInt();
         }
         avgDenseVectorDims = input.readVInt();
@@ -36,7 +36,7 @@ public class VectorsFeatureSetUsage extends XPackFeatureSet.Usage {
         super.writeTo(out);
         out.writeVInt(numDenseVectorFields);
         // Older versions recorded the number of sparse vector fields.
-        if (out.getVersion().before(Version.V_8_0_0)) {
+        if (out.getVersion().before(Version.V_7_11_0)) {
             out.writeVInt(0);
         }
         out.writeVInt(avgDenseVectorDims);

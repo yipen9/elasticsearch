@@ -94,6 +94,6 @@ public class XPackInfoRequest extends ActionRequest {
     }
 
     private static boolean hasLicenseVersionField(Version streamVersion) {
-        return streamVersion.onOrAfter(Version.V_7_8_1) && streamVersion.before(Version.V_8_0_0);
+        return streamVersion.onOrAfter(Version.V_7_8_1) && streamVersion.before(Version.V_7_11_0);
     }
 }

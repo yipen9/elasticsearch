@@ -661,7 +661,7 @@ public class FullClusterRestartIT extends AbstractFullClusterRestartTestCase {
         final String index = "test_frozen_index";
         if (isRunningAgainstOldCluster()) {
             Settings.Builder settings = Settings.builder();
-            if (minimumNodeVersion().before(Version.V_8_0_0) && randomBoolean()) {
+            if (minimumNodeVersion().before(Version.V_7_11_0) && randomBoolean()) {
                 settings.put(IndexSettings.INDEX_SOFT_DELETES_SETTING.getKey(), randomBoolean());
             }
             String mappings = randomBoolean() ? "\"_source\": { \"enabled\": false}" : null;

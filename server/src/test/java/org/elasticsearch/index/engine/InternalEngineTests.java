@@ -5461,7 +5461,7 @@ public class InternalEngineTests extends EngineTestCase {
         List<Engine.Operation> operations = generateHistoryOnReplica(between(1, 500), randomBoolean(), randomBoolean(), randomBoolean());
         final IndexMetadata indexMetadata = IndexMetadata.builder(defaultSettings.getIndexMetadata())
             .settings(Settings.builder().put(defaultSettings.getSettings())
-                .put(IndexMetadata.SETTING_VERSION_CREATED, VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_8_0_0))
+                .put(IndexMetadata.SETTING_VERSION_CREATED, VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_7_11_0))
                 .put(IndexSettings.INDEX_SOFT_DELETES_SETTING.getKey(), false)).build();
         final IndexSettings indexSettings = IndexSettingsModule.newIndexSettings(indexMetadata);
         try (Store store = createStore()) {

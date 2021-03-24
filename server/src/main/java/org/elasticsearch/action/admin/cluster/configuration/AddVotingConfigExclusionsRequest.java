@@ -84,7 +84,7 @@ public class AddVotingConfigExclusionsRequest extends MasterNodeRequest<AddVotin
 
     public AddVotingConfigExclusionsRequest(StreamInput in) throws IOException {
         super(in);
-        if (in.getVersion().before(Version.V_8_0_0)) {
+        if (in.getVersion().before(Version.V_7_11_0)) {
             final String[] legacyNodeDescriptions = in.readStringArray();
             if (legacyNodeDescriptions.length > 0) {
                 throw new IllegalArgumentException("legacy [node_name] field was deprecated and must be empty");
@@ -179,7 +179,7 @@ public class AddVotingConfigExclusionsRequest extends MasterNodeRequest<AddVotin
     @Override
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);
-        if (out.getVersion().before(Version.V_8_0_0)) {
+        if (out.getVersion().before(Version.V_7_11_0)) {
             out.writeStringArray(Strings.EMPTY_ARRAY);
         }
         out.writeStringArray(nodeIds);

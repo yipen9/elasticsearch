@@ -40,7 +40,7 @@ public class DatafeedConfigAutoUpdater implements MlAutoUpdateService.UpdateActi
 
     @Override
     public boolean isMinNodeVersionSupported(Version minNodeVersion) {
-        return minNodeVersion.onOrAfter(Version.V_8_0_0);
+        return minNodeVersion.onOrAfter(Version.V_7_11_0);
     }
 
     @Override

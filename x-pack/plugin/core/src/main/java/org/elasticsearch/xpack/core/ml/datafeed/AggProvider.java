@@ -111,7 +111,7 @@ class AggProvider implements Writeable, ToXContentObject {
             in.readMap(),
             in.readOptionalWriteable(AggregatorFactories.Builder::new),
             in.readException(),
-            in.getVersion().onOrAfter(Version.V_8_0_0) ? in.readBoolean() : false);
+            in.getVersion().onOrAfter(Version.V_7_11_0) ? in.readBoolean() : false);
     }
 
     AggProvider(Map<String, Object> aggs, AggregatorFactories.Builder parsedAggs, Exception parsingException, boolean rewroteAggs) {
@@ -133,7 +133,7 @@ class AggProvider implements Writeable, ToXContentObject {
         out.writeMap(aggs);
         out.writeOptionalWriteable(parsedAggs);
         out.writeException(parsingException);
-        if (out.getVersion().onOrAfter(Version.V_8_0_0)) {
+        if (out.getVersion().onOrAfter(Version.V_7_11_0)) {
             out.writeBoolean(rewroteAggs);
         }
     }

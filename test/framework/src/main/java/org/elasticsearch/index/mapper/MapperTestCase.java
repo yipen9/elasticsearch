@@ -288,7 +288,7 @@ public abstract class MapperTestCase extends MapperServiceTestCase {
         }
 
         MapperParsingException e
-            = expectThrows(MapperParsingException.class, () -> createMapperService(Version.V_8_0_0, fieldMapping(b -> {
+            = expectThrows(MapperParsingException.class, () -> createMapperService(Version.V_7_11_0, fieldMapping(b -> {
             minimalMapping(b);
             b.field("boost", 2.0);
         })));

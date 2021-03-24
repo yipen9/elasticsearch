@@ -91,7 +91,7 @@ public class TransportShardFlushAction
 
         private PreShardSyncedFlushRequest(StreamInput in) throws IOException {
             super(in);
-            assert in.getVersion().before(Version.V_8_0_0) : "received pre_sync request from a new node";
+            assert in.getVersion().before(Version.V_7_11_0) : "received pre_sync request from a new node";
             this.shardId = new ShardId(in);
         }
 

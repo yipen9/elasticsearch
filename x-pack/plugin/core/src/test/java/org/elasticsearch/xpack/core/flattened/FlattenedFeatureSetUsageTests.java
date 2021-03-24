@@ -15,7 +15,7 @@ public class FlattenedFeatureSetUsageTests extends AbstractWireSerializingTestCa
 
     public void testFlattenedIsRemovedInNextMajor() {
         assertTrue("FlattenedFeatureSetUsageTests is no longer needed and should be removed in 9.x",
-            Version.CURRENT.major <= Version.V_8_0_0.major);
+            Version.CURRENT.major <= Version.V_7_11_0.major);
     }
 
     @Override

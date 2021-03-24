@@ -2023,7 +2023,7 @@ public class AutoFollowCoordinatorTests extends ESTestCase {
     private static ClusterState createRemoteClusterState(String indexName, boolean enableSoftDeletes, long metadataVersion) {
         Settings.Builder indexSettings;
         if (enableSoftDeletes == false) {
-            indexSettings = settings(VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_8_0_0))
+            indexSettings = settings(VersionUtils.randomPreviousCompatibleVersion(random(), Version.V_7_11_0))
                 .put(IndexSettings.INDEX_SOFT_DELETES_SETTING.getKey(), false);
         } else {
             indexSettings = settings(Version.CURRENT);

@@ -249,7 +249,7 @@ public class DateFieldMapperTests extends MapperTestCase {
     public void testBadNullValue() throws IOException {
 
         MapperParsingException e = expectThrows(MapperParsingException.class,
-            () -> createDocumentMapper(Version.V_8_0_0, fieldMapping(b -> b.field("type", "date").field("null_value", "foo"))));
+            () -> createDocumentMapper(Version.V_7_11_0, fieldMapping(b -> b.field("type", "date").field("null_value", "foo"))));
 
         assertThat(e.getMessage(),
             equalTo("Failed to parse mapping: Error parsing [null_value] on field [field]: " +

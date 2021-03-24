@@ -960,7 +960,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
                     continue;
                 }
                 if (Objects.equals("boost", propName)) {
-                    if (parserContext.indexVersionCreated().before(Version.V_8_0_0)) {
+                    if (parserContext.indexVersionCreated().before(Version.V_7_11_0)) {
                         deprecationLogger.deprecate(
                             "boost",
                             "Parameter [boost] on field [{}] is deprecated and has no effect",
@@ -1018,7 +1018,7 @@ public abstract class FieldMapper extends Mapper implements Cloneable {
             = Set.of("store", "meta", "index", "doc_values", "index_options", "similarity");
 
         private static boolean isDeprecatedParameter(String propName, Version indexCreatedVersion) {
-            if (indexCreatedVersion.onOrAfter(Version.V_8_0_0)) {
+            if (indexCreatedVersion.onOrAfter(Version.V_7_11_0)) {
                 return false;
             }
             return DEPRECATED_PARAMS.contains(propName);

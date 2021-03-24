@@ -68,7 +68,7 @@ public class IndexNameExpressionResolver {
 
     public static final String EXCLUDED_DATA_STREAMS_KEY = "es.excluded_ds";
     public static final String SYSTEM_INDEX_ACCESS_CONTROL_HEADER_KEY = "_system_index_access_allowed";
-    public static final Version SYSTEM_INDEX_ENFORCEMENT_VERSION = Version.V_8_0_0;
+    public static final Version SYSTEM_INDEX_ENFORCEMENT_VERSION = Version.V_7_11_0;
 
     private final DateMathExpressionResolver dateMathExpressionResolver = new DateMathExpressionResolver();
     private final WildcardExpressionResolver wildcardExpressionResolver = new WildcardExpressionResolver();

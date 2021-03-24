@@ -86,7 +86,7 @@ public class OperationRouting {
                                                            @Nullable String preference,
                                                            @Nullable ResponseCollectorService collectorService,
                                                            @Nullable Map<String, Long> nodeCounts) {
-        final Set<IndexShardRoutingTable> shards = computeTargetedShards(clusterState, concreteIndices, routing);
+        final Set<IndexShardRoutingTable> shards = computeTargetedShards(clusterState, concreteIndices, routing);   //获取这个索引所有分片
         final Set<ShardIterator> set = new HashSet<>(shards.size());
         for (IndexShardRoutingTable shard : shards) {
             ShardIterator iterator = preferenceActiveShardIterator(shard,
@@ -113,7 +113,7 @@ public class OperationRouting {
         for (String index : concreteIndices) {
             final IndexRoutingTable indexRouting = indexRoutingTable(clusterState, index);
             final IndexMetadata indexMetadata = indexMetadata(clusterState, index);
-            final Set<String> effectiveRouting = routing.get(index);
+            final Set<String> effectiveRouting = routing.get(index);    //如果指定路由，则快速获取
             if (effectiveRouting != null) {
                 for (String r : effectiveRouting) {
                     final int routingPartitionSize = indexMetadata.getRoutingPartitionSize();
@@ -202,7 +202,7 @@ public class OperationRouting {
     }
 
     protected IndexRoutingTable indexRoutingTable(ClusterState clusterState, String index) {
-        IndexRoutingTable indexRouting = clusterState.routingTable().index(index);
+        IndexRoutingTable indexRouting = clusterState.routingTable().index(index);//获取索引对应的路由表，indexRouting
         if (indexRouting == null) {
             throw new IndexNotFoundException(index);
         }
@@ -210,7 +210,7 @@ public class OperationRouting {
     }
 
     protected IndexMetadata indexMetadata(ClusterState clusterState, String index) {
-        IndexMetadata indexMetadata = clusterState.metadata().index(index);
+        IndexMetadata indexMetadata = clusterState.metadata().index(index); //获取索引的原始信息，indexMetadata
         if (indexMetadata == null) {
             throw new IndexNotFoundException(index);
         }

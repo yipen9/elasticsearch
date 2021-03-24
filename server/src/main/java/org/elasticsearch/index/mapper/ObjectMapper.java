@@ -383,7 +383,7 @@ public class ObjectMapper extends Mapper implements Cloneable {
         } else {
             this.mappers = CopyOnWriteHashMap.copyOf(mappers);
         }
-        if (indexCreatedVersion.before(Version.V_8_0_0)) {
+        if (indexCreatedVersion.before(Version.V_7_11_0)) {
             this.nestedTypePath = "__" + fullPath;
         } else {
             this.nestedTypePath = fullPath;

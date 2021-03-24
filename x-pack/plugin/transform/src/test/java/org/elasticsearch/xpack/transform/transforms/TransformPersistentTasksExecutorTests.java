@@ -103,7 +103,7 @@ public class TransformPersistentTasksExecutorTests extends ESTestCase {
         cs = buildClusterState(nodes);
         executor = buildTaskExecutor();
 
-        assignment = executor.getAssignment(new TransformTaskParams("new-task-id", Version.V_8_0_0, null, false), cs);
+        assignment = executor.getAssignment(new TransformTaskParams("new-task-id", Version.V_7_11_0, null, false), cs);
         assertNull(assignment.getExecutorNode());
         assertThat(
             assignment.getExplanation(),

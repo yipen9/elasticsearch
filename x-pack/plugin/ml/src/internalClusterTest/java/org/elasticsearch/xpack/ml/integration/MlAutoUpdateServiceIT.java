@@ -97,7 +97,7 @@ public class MlAutoUpdateServiceIT extends MlSingleNodeTestCase {
                         new TransportAddress(InetAddress.getLoopbackAddress(), 9300),
                         Collections.emptyMap(),
                         Set.of(DiscoveryNodeRole.MASTER_ROLE),
-                        Version.V_8_0_0))
+                        Version.V_7_11_0))
                     .localNodeId("node_id")
                     .masterNodeId("node_id")
                     .build())

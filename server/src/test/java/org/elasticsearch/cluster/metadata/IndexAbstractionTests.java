@@ -121,7 +121,7 @@ public class IndexAbstractionTests extends ESTestCase {
 
     public void testSystemAliasValidationMixedVersionSystemAndRegularFails() {
         final Version random7xVersion = VersionUtils.randomVersionBetween(random(), Version.V_7_0_0,
-            VersionUtils.getPreviousVersion(Version.V_8_0_0));
+            VersionUtils.getPreviousVersion(Version.V_7_11_0));
         final AliasMetadata aliasMetadata = new AliasMetadata.Builder(SYSTEM_ALIAS_NAME).build();
         final IndexMetadata currentVersionSystem = buildIndexWithAlias(".system1", SYSTEM_ALIAS_NAME, null, Version.CURRENT, true);
         final IndexMetadata oldVersionSystem = buildIndexWithAlias(".oldVersionSystem", SYSTEM_ALIAS_NAME, null, random7xVersion, true);
@@ -153,7 +153,7 @@ public class IndexAbstractionTests extends ESTestCase {
 
     public void testSystemAliasOldSystemAndNewRegular() {
         final Version random7xVersion = VersionUtils.randomVersionBetween(random(), Version.V_7_0_0,
-            VersionUtils.getPreviousVersion(Version.V_8_0_0));
+            VersionUtils.getPreviousVersion(Version.V_7_11_0));
         final AliasMetadata aliasMetadata = new AliasMetadata.Builder(SYSTEM_ALIAS_NAME).build();
         final IndexMetadata oldVersionSystem = buildIndexWithAlias(".oldVersionSystem", SYSTEM_ALIAS_NAME, null, random7xVersion, true);
         final IndexMetadata regularIndex = buildIndexWithAlias("regular1", SYSTEM_ALIAS_NAME, false, Version.CURRENT, false);
@@ -165,7 +165,7 @@ public class IndexAbstractionTests extends ESTestCase {
 
     public void testSystemIndexValidationAllRegular() {
         final Version random7xVersion = VersionUtils.randomVersionBetween(random(), Version.V_7_0_0,
-            VersionUtils.getPreviousVersion(Version.V_8_0_0));
+            VersionUtils.getPreviousVersion(Version.V_7_11_0));
         final AliasMetadata aliasMetadata = new AliasMetadata.Builder(SYSTEM_ALIAS_NAME).build();
         final IndexMetadata currentVersionSystem = buildIndexWithAlias(".system1", SYSTEM_ALIAS_NAME, null, Version.CURRENT, true);
         final IndexMetadata currentVersionSystem2 = buildIndexWithAlias(".system2", SYSTEM_ALIAS_NAME, null, Version.CURRENT, true);
@@ -179,7 +179,7 @@ public class IndexAbstractionTests extends ESTestCase {
 
     public void testSystemAliasValidationAllSystemSomeOld() {
         final Version random7xVersion = VersionUtils.randomVersionBetween(random(), Version.V_7_0_0,
-            VersionUtils.getPreviousVersion(Version.V_8_0_0));
+            VersionUtils.getPreviousVersion(Version.V_7_11_0));
         final AliasMetadata aliasMetadata = new AliasMetadata.Builder(SYSTEM_ALIAS_NAME).build();
         final IndexMetadata currentVersionSystem = buildIndexWithAlias(".system1", SYSTEM_ALIAS_NAME, null, Version.CURRENT, true);
         final IndexMetadata currentVersionSystem2 = buildIndexWithAlias(".system2", SYSTEM_ALIAS_NAME, null, Version.CURRENT, true);

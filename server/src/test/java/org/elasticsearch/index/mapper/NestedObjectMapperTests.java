@@ -805,7 +805,7 @@ public class NestedObjectMapperTests extends MapperServiceTestCase {
             XContentType.JSON));
 
         assertThat(doc.docs().size(), equalTo(3));
-        if (version.before(Version.V_8_0_0)) {
+        if (version.before(Version.V_7_11_0)) {
             assertThat(doc.docs().get(0).get(TypeFieldType.NAME), equalTo(nested1Mapper.nestedTypePath()));
         } else {
             assertThat(doc.docs().get(0).get(NestedPathFieldMapper.NAME), equalTo(nested1Mapper.nestedTypePath()));

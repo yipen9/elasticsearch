@@ -94,7 +94,7 @@ public class FieldNamesFieldMapper extends MetadataFieldMapper {
         @Override
         public FieldNamesFieldMapper build() {
             if (enabled.getValue().explicit()) {
-                if (indexVersionCreated.onOrAfter(Version.V_8_0_0)) {
+                if (indexVersionCreated.onOrAfter(Version.V_7_11_0)) {
                     throw new MapperParsingException("The `enabled` setting for the `_field_names` field has been deprecated and "
                         + "removed. Please remove it from your mappings and templates.");
                 } else {

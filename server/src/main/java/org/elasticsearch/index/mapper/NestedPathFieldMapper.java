@@ -37,7 +37,7 @@ public class NestedPathFieldMapper extends MetadataFieldMapper {
     public static final String NAME = "_nested_path";
 
     public static String name(Version version) {
-        if (version.before(Version.V_8_0_0)) {
+        if (version.before(Version.V_7_11_0)) {
             return NAME_PRE_V8;
         }
         return NAME;

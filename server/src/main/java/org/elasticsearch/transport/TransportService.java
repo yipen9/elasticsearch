@@ -507,11 +507,11 @@ public class TransportService extends AbstractLifecycleComponent
                 }
             }
 
-            if (isIncompatibleBuild(version, buildHash)) {
-                throw new IllegalArgumentException("remote node [" + discoveryNode + "] is build [" + buildHash +
-                        "] of version [" + version + "] but this node is build [" + Build.CURRENT.hash() +
-                        "] of version [" + Version.CURRENT + "] which has an incompatible wire format");
-            }
+//            if (isIncompatibleBuild(version, buildHash)) {
+//                throw new IllegalArgumentException("remote node [" + discoveryNode + "] is build [" + buildHash +
+//                        "] of version [" + version + "] but this node is build [" + Build.CURRENT.hash() +
+//                        "] of version [" + Version.CURRENT + "] which has an incompatible wire format");
+//            }
 
             clusterName = new ClusterName(in);
         }
