@@ -265,6 +265,7 @@ public final class SearchPhaseController {
      *
      * Expects sortedDocs to have top search docs across all shards, optionally followed by top suggest docs for each named
      * completion suggestion ordered by suggestion name
+     * 执行merge的操作
      */
     public InternalSearchResponse merge(boolean ignoreFrom, ReducedQueryPhase reducedQueryPhase,
                                         Collection<? extends SearchPhaseResult> fetchResults,

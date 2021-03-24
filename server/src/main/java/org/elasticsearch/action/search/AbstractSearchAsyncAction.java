@@ -219,7 +219,7 @@ abstract class AbstractSearchAsyncAction<Result extends SearchPhaseResult> exten
                     throw new SearchPhaseExecutionException(getName(), msg, null, ShardSearchFailure.EMPTY_ARRAY);
                 }
             }
-
+            //每个分片执行
             for (int i = 0; i < shardsIts.size(); i++) {
                 final SearchShardIterator shardRoutings = shardsIts.get(i);
                 assert shardRoutings.skip() == false;
@@ -236,7 +236,7 @@ abstract class AbstractSearchAsyncAction<Result extends SearchPhaseResult> exten
         assert iterator.skip();
         successfulShardExecution(iterator);
     }
-
+    //在分片上执行
     private void performPhaseOnShard(final int shardIndex, final SearchShardIterator shardIt, final SearchShardTarget shard) {
         /*
          * We capture the thread that this phase is starting on. When we are called back after executing the phase, we are either on the
@@ -499,14 +499,14 @@ abstract class AbstractSearchAsyncAction<Result extends SearchPhaseResult> exten
      * @param result the result returned form the shard
      * @param shardIt the shard iterator
      */
-    protected void onShardResult(Result result, SearchShardIterator shardIt) {
+    protected void onShardResult(Result result, SearchShardIterator shardIt) {  //每个分片结果处理执行
         assert result.getShardIndex() != -1 : "shard index is not set";
         assert result.getSearchShardTarget() != null : "search shard target must not be null";
         hasShardResponse.set(true);
         if (logger.isTraceEnabled()) {
             logger.trace("got first-phase result from {}", result != null ? result.getSearchShardTarget() : null);
         }
-        results.consumeResult(result, () -> onShardResultConsumed(result, shardIt));
+        results.consumeResult(result, () -> onShardResultConsumed(result, shardIt));    //分片执行完后，执行Runnable ： () -> onShardResultConsumed(result, shardIt)
     }
 
     private void onShardResultConsumed(Result result, SearchShardIterator shardIt) {
@@ -525,7 +525,7 @@ abstract class AbstractSearchAsyncAction<Result extends SearchPhaseResult> exten
         // and when that happens, we break on total ops, so we must maintain them
         successfulShardExecution(shardIt);
     }
-
+    //所有分片成功执行
     private void successfulShardExecution(SearchShardIterator shardsIt) {
         final int remainingOpsOnIterator;
         if (shardsIt.skip()) {

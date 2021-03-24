@@ -290,7 +290,7 @@ public class TransportSearchAction extends HandledTransportAction<SearchRequest,
             }
             OriginalIndices localIndices = remoteClusterIndices.remove(RemoteClusterAware.LOCAL_CLUSTER_GROUP_KEY);
             final ClusterState clusterState = clusterService.state();
-            if (remoteClusterIndices.isEmpty()) {
+            if (remoteClusterIndices.isEmpty()) {   //没有远程，则本地执行
                 executeLocalSearch(
                     task, timeProvider, searchRequest, localIndices, clusterState, listener, searchContext, searchAsyncActionProvider);
             } else {
@@ -448,6 +448,7 @@ public class TransportSearchAction extends HandledTransportAction<SearchRequest,
     static void collectSearchShards(IndicesOptions indicesOptions, String preference, String routing, AtomicInteger skippedClusters,
                                     Map<String, OriginalIndices> remoteIndicesByCluster, RemoteClusterService remoteClusterService,
                                     ThreadPool threadPool, ActionListener<Map<String, ClusterSearchShardsResponse>> listener) {
+        //收集所有分片数据
         final CountDown responsesCountDown = new CountDown(remoteIndicesByCluster.size());
         final Map<String, ClusterSearchShardsResponse> searchShardsResponses = new ConcurrentHashMap<>();
         final AtomicReference<Exception> exceptions = new AtomicReference<>();

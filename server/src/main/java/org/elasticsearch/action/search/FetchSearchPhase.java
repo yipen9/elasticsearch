@@ -114,7 +114,7 @@ final class FetchSearchPhase extends SearchPhase {
         if (queryAndFetchOptimization) {
             assert phaseResults.isEmpty() || phaseResults.get(0).fetchResult() != null : "phaseResults empty [" + phaseResults.isEmpty()
                 + "], single result: " +  phaseResults.get(0).fetchResult();
-            // query AND fetch optimization
+            // query AND fetch optimization //第二部，merge分片结果
             finishPhase.run();
         } else {
             ScoreDoc[] scoreDocs = reducedQueryPhase.sortedTopDocs.scoreDocs;
@@ -220,7 +220,7 @@ final class FetchSearchPhase extends SearchPhase {
             }
         }
     }
-
+    //跳到第二步
     private void moveToNextPhase(SearchPhaseController searchPhaseController,
                                  AtomicArray<SearchPhaseResult> queryPhaseResults,
                                  SearchPhaseController.ReducedQueryPhase reducedQueryPhase,
