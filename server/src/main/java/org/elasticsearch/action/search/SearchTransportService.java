@@ -70,6 +70,8 @@ import java.util.function.BiFunction;
 /**
  * An encapsulation of {@link org.elasticsearch.search.SearchService} operations exposed through
  * transport.
+ * Search方法，根据不同的name，注册searchService不同的方法SearchService,在收到request请求是，
+ * 通过org.elasticsearch.transport.TransportService#getRequestHandler(java.lang.String)得到对应的handler进行处理
  */
 public class SearchTransportService {
 
