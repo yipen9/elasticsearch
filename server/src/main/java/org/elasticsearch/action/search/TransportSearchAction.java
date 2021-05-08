@@ -279,9 +279,9 @@ public class TransportSearchAction extends HandledTransportAction<SearchRequest,
                 // situations when source is rewritten to null due to a bug
                 searchRequest.source(source);
             }
-            final SearchContextId searchContext;
+            final SearchContextId searchContext;    //普通搜索不需要搜索上下文searchContext
             final Map<String, OriginalIndices> remoteClusterIndices;
-            if (searchRequest.pointInTimeBuilder() != null) {
+            if (searchRequest.pointInTimeBuilder() != null) {//是否是pit搜索
                 searchContext = SearchContextId.decode(namedWriteableRegistry, searchRequest.pointInTimeBuilder().getId());
                 remoteClusterIndices = getIndicesFromSearchContexts(searchContext, searchRequest.indicesOptions());
             } else {
