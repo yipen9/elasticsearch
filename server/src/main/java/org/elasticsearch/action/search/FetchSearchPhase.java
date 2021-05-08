@@ -137,7 +137,7 @@ final class FetchSearchPhase extends SearchPhase {
                     IntArrayList entry = docIdsToLoad[i];
                     SearchPhaseResult queryResult = queryResults.get(i);
                     if (entry == null) { // no results for this shard ID 当前的分片没有results
-                        if (queryResult != null) {
+                        if (queryResult != null) {  //没有命中的分片，需要释放release，在transport layer 消耗不大
                             // if we got some hits from this shard we have to release the context there
                             // we do this as we go since it will free up resources and passing on the request on the
                             // transport layer is cheap.
@@ -204,16 +204,18 @@ final class FetchSearchPhase extends SearchPhase {
 
     /**
      * Releases shard targets that are not used in the docsIdsToLoad.
+     * 释放不相关的搜索上下文
      */
     private void releaseIrrelevantSearchContext(QuerySearchResult queryResult) {
         // we only release search context that we did not fetch from, if we are not scrolling
         // or using a PIT and if it has at least one hit that didn't make it to the global topDocs
-        if (queryResult.hasSearchContext()
+        if (queryResult.hasSearchContext()  //queryResult有searchContext
                 && context.getRequest().scroll() == null
                 && context.getRequest().pointInTimeBuilder() == null) {
             try {
                 SearchShardTarget searchShardTarget = queryResult.getSearchShardTarget();
                 Transport.Connection connection = context.getConnection(searchShardTarget.getClusterAlias(), searchShardTarget.getNodeId());
+                /**具体执行方法为{@link org.elasticsearch.search.SearchService#freeReaderContext}**/
                 context.sendReleaseSearchContext(queryResult.getContextId(), connection, searchShardTarget.getOriginalIndices());
             } catch (Exception e) {
                 context.getLogger().trace("failed to release context", e);
