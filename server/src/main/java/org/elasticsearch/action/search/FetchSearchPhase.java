@@ -105,20 +105,20 @@ final class FetchSearchPhase extends SearchPhase {
     private void innerRun() throws Exception {
         final int numShards = context.getNumShards();
         final boolean isScrollSearch = context.getRequest().scroll() != null;
-        final List<SearchPhaseResult> phaseResults = queryResults.asList();
+        final List<SearchPhaseResult> phaseResults = queryResults.asList(); //返回索引每个分片的情况，不管有没有命中
         final SearchPhaseController.ReducedQueryPhase reducedQueryPhase = resultConsumer.reduce();
         final boolean queryAndFetchOptimization = queryResults.length() == 1;
         final Runnable finishPhase = ()
             -> moveToNextPhase(searchPhaseController, queryResults, reducedQueryPhase, queryAndFetchOptimization ?
             queryResults : fetchResults.getAtomicArray());
-        if (queryAndFetchOptimization) {
+        if (queryAndFetchOptimization) {    //只有一个分片的情况。
             assert phaseResults.isEmpty() || phaseResults.get(0).fetchResult() != null : "phaseResults empty [" + phaseResults.isEmpty()
                 + "], single result: " +  phaseResults.get(0).fetchResult();
-            // query AND fetch optimization //第二部，merge分片结果
+            // query AND fetch optimization //第二步，merge分片结果
             finishPhase.run();
         } else {
             ScoreDoc[] scoreDocs = reducedQueryPhase.sortedTopDocs.scoreDocs;
-            final IntArrayList[] docIdsToLoad = searchPhaseController.fillDocIdsToLoad(numShards, scoreDocs);
+            final IntArrayList[] docIdsToLoad = searchPhaseController.fillDocIdsToLoad(numShards, scoreDocs);//将分片的scoreDocs合并到docIdsToLoad
             // no docs to fetch -- sidestep everything and return
             if (scoreDocs.length == 0) {
                 // we have to release contexts here to free up resources
@@ -136,7 +136,7 @@ final class FetchSearchPhase extends SearchPhase {
                 for (int i = 0; i < docIdsToLoad.length; i++) {
                     IntArrayList entry = docIdsToLoad[i];
                     SearchPhaseResult queryResult = queryResults.get(i);
-                    if (entry == null) { // no results for this shard ID
+                    if (entry == null) { // no results for this shard ID 当前的分片没有results
                         if (queryResult != null) {
                             // if we got some hits from this shard we have to release the context there
                             // we do this as we go since it will free up resources and passing on the request on the

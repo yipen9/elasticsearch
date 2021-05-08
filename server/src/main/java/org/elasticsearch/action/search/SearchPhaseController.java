@@ -139,6 +139,7 @@ public final class SearchPhaseController {
     }
 
     /**
+     * 返回topN的docs文档，通过合并所有的分片
      * Returns a score doc array of top N search docs across all shards, followed by top suggest docs for each
      * named completion suggestion across all shards. If more than one named completion suggestion is specified in the
      * request, the suggest docs for a named suggestion are ordered by the suggestion name.
