@@ -49,6 +49,13 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
+/**
+ * 查询节点的各个状态，包括jvm，OS，FS，ThreadPool等
+ * @param <NodesRequest>
+ * @param <NodesResponse>
+ * @param <NodeRequest>
+ * @param <NodeResponse>
+ */
 public abstract class TransportNodesAction<NodesRequest extends BaseNodesRequest<NodesRequest>,
                                            NodesResponse extends BaseNodesResponse,
                                            NodeRequest extends TransportRequest,

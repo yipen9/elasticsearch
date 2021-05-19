@@ -30,6 +30,9 @@ import java.util.List;
 
 import static org.elasticsearch.rest.RestRequest.Method.GET;
 
+/**
+ *查询集群整体或者节点状态
+ */
 public class RestClusterStatsAction extends BaseRestHandler {
 
     @Override
