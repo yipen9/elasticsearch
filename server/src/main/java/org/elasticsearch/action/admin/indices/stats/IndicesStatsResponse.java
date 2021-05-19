@@ -100,7 +100,7 @@ public class IndicesStatsResponse extends BroadcastResponse {
     private CommonStats total = null;
 
     public CommonStats getTotal() {
-        if (total != null) {
+        if (total != null) {    //返回合并计算
             return total;
         }
         CommonStats stats = new CommonStats();

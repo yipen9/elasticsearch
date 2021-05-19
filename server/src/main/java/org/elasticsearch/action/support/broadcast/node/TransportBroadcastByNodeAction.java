@@ -62,6 +62,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
 /**
+ * 抽象类，为传输分片级别的操作在单个请求给每个节点
  * Abstraction for transporting aggregated shard-level operations in a single request (NodeRequest) per-node
  * and executing the shard-level operations serially on the receiving node. Each shard-level operation can produce a
  * result (ShardOperationResult), these per-node shard-level results are aggregated into a single result
@@ -306,10 +307,10 @@ public abstract class TransportBroadcastByNodeAction<Request extends BroadcastRe
                 }
             } else {
                 int nodeIndex = -1;
-                for (Map.Entry<String, List<ShardRouting>> entry : nodeIds.entrySet()) {
+                for (Map.Entry<String, List<ShardRouting>> entry : nodeIds.entrySet()) {//遍历所有nodeIds
                     nodeIndex++;
                     DiscoveryNode node = nodes.get(entry.getKey());
-                    sendNodeRequest(node, entry.getValue(), nodeIndex);
+                    sendNodeRequest(node, entry.getValue(), nodeIndex);     //发送NodeRequest
                 }
             }
         }
@@ -328,7 +329,7 @@ public abstract class TransportBroadcastByNodeAction<Request extends BroadcastRe
 
                     @Override
                     public void handleResponse(NodeResponse response) {
-                        onNodeResponse(node, nodeIndex, response);
+                        onNodeResponse(node, nodeIndex, response);  //返回结果
                     }
 
                     @Override
@@ -389,7 +390,7 @@ public abstract class TransportBroadcastByNodeAction<Request extends BroadcastRe
             }
         }
     }
-
+    //广播处理，节点请求，比如统计相关指标_stats
     class BroadcastByNodeTransportRequestHandler implements TransportRequestHandler<NodeRequest> {
         @Override
         public void messageReceived(final NodeRequest request, TransportChannel channel, Task task) throws Exception {

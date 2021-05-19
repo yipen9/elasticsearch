@@ -105,8 +105,7 @@ public class OperationRouting {
 
     private static final Map<String, Set<String>> EMPTY_ROUTING = Collections.emptyMap();
 
-    private Set<IndexShardRoutingTable> computeTargetedShards(ClusterState clusterState, String[] concreteIndices,
-                                                              @Nullable Map<String, Set<String>> routing) {
+    private Set<IndexShardRoutingTable> computeTargetedShards(ClusterState clusterState, String[] concreteIndices, @Nullable Map<String, Set<String>> routing) {
         routing = routing == null ? EMPTY_ROUTING : routing; // just use an empty map
         final Set<IndexShardRoutingTable> set = new HashSet<>();
         // we use set here and not list since we might get duplicates

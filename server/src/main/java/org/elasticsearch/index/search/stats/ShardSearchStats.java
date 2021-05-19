@@ -35,9 +35,9 @@ import java.util.function.Consumer;
 
 import static java.util.Collections.emptyMap;
 
-public final class ShardSearchStats implements SearchOperationListener {
+public final class ShardSearchStats implements SearchOperationListener {    //实现SearchOperationListener
 
-    private final StatsHolder totalStats = new StatsHolder();
+    private final StatsHolder totalStats = new StatsHolder();   //操作统计totalStats
     private final CounterMetric openContexts = new CounterMetric();
     private volatile Map<String, StatsHolder> groupsStats = emptyMap();
 
@@ -47,7 +47,7 @@ public final class ShardSearchStats implements SearchOperationListener {
      * {@code _all} for all groups.
      */
     public SearchStats stats(String... groups) {
-        SearchStats.Stats total = totalStats.stats();
+        SearchStats.Stats total = totalStats.stats();   //获取totalStats对应的
         Map<String, SearchStats.Stats> groupsSt = null;
         if (CollectionUtils.isEmpty(groups) == false) {
             groupsSt = new HashMap<>(groupsStats.size());
@@ -91,7 +91,7 @@ public final class ShardSearchStats implements SearchOperationListener {
     }
 
     @Override
-    public void onQueryPhase(SearchContext searchContext, long tookInNanos) {
+    public void onQueryPhase(SearchContext searchContext, long tookInNanos) {   //进行查询的统计
         computeStats(searchContext, statsHolder -> {
             if (searchContext.hasOnlySuggest()) {
                 statsHolder.suggestMetric.inc(tookInNanos);
