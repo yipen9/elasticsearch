@@ -223,11 +223,11 @@ public class TermsAggregatorFactory extends ValuesSourceAggregatorFactory {
     }
 
     @Override
-    protected Aggregator doCreateInternal(
+    protected Aggregator doCreateInternal(  //创建Aggregator
         Aggregator parent,
         CardinalityUpperBound cardinality,
         Map<String, Object> metadata
-    ) throws IOException {
+    ) throws IOException {//bucketCountThresholds传入thresholds参数阀值
         BucketCountThresholds bucketCountThresholds = new BucketCountThresholds(this.bucketCountThresholds);
         if (InternalOrder.isKeyOrder(order) == false
             && bucketCountThresholds.getShardSize() == TermsAggregationBuilder.DEFAULT_BUCKET_COUNT_THRESHOLDS.getShardSize()) {

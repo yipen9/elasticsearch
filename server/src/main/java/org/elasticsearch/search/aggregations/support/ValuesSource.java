@@ -216,7 +216,7 @@ public abstract class ValuesSource {
                 }
 
                 @Override
-                public SortedSetDocValues ordinalsValues(LeafReaderContext context) {
+                public SortedSetDocValues ordinalsValues(LeafReaderContext context) {//加载LeafOrdinalsFieldData数据
                     final LeafOrdinalsFieldData atomicFieldData = indexFieldData.load(context);
                     return atomicFieldData.getOrdinalsValues();
                 }

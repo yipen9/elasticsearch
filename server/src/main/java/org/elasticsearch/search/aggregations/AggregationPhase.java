@@ -47,6 +47,7 @@ public class AggregationPhase {
             List<Aggregator> collectors = new ArrayList<>();
             Aggregator[] aggregators;
             try {
+                //开始query收集前，创建all aggregators so that they can be consumed with multiple
                 aggregators = context.aggregations().factories().createTopLevelAggregators();
                 for (int i = 0; i < aggregators.length; i++) {
                     if (aggregators[i] instanceof GlobalAggregator == false) {

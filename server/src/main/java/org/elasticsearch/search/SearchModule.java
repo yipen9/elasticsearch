@@ -390,6 +390,7 @@ public class SearchModule {
         registerAggregation(new AggregationSpec(DiversifiedAggregationBuilder.NAME, DiversifiedAggregationBuilder::new,
                 DiversifiedAggregationBuilder.PARSER).setAggregatorRegistrar(DiversifiedAggregationBuilder::registerAggregators)
                     /* Reuses result readers from SamplerAggregator*/, builder);
+        //注册termAgg
         registerAggregation(new AggregationSpec(TermsAggregationBuilder.NAME, TermsAggregationBuilder::new,
                 TermsAggregationBuilder.PARSER)
                     .addResultReader(StringTerms.NAME, StringTerms::new)

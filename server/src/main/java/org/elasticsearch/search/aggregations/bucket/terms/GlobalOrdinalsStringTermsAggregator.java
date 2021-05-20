@@ -299,7 +299,7 @@ public class GlobalOrdinalsStringTermsAggregator extends AbstractStringTermsAggr
             if (mapping != null) {
                 mapSegmentCountsToGlobalCounts(mapping);
             }
-            final SortedSetDocValues segmentOrds = valuesSource.ordinalsValues(ctx);
+            final SortedSetDocValues segmentOrds = valuesSource.ordinalsValues(ctx);    //获取Lucene80DocValuesProducer
             segmentDocCounts = bigArrays().grow(segmentDocCounts, 1 + segmentOrds.getValueCount());
             assert sub == LeafBucketCollector.NO_OP_COLLECTOR;
             final SortedDocValues singleValues = DocValues.unwrapSingleton(segmentOrds);
@@ -309,7 +309,7 @@ public class GlobalOrdinalsStringTermsAggregator extends AbstractStringTermsAggr
                 segmentsWithSingleValuedOrds++;
                 return resultStrategy.wrapCollector(new LeafBucketCollectorBase(sub, segmentOrds) {
                     @Override
-                    public void collect(int doc, long owningBucketOrd) throws IOException {
+                    public void collect(int doc, long owningBucketOrd) throws IOException { //terms聚合在
                         assert owningBucketOrd == 0;
                         if (false == singleValues.advanceExact(doc)) {
                             return;
@@ -349,7 +349,7 @@ public class GlobalOrdinalsStringTermsAggregator extends AbstractStringTermsAggr
         protected void doClose() {
             Releasables.close(resultStrategy, segmentDocCounts, collectionStrategy);
         }
-
+        //将聚合结果合并
         private void mapSegmentCountsToGlobalCounts(LongUnaryOperator mapping) throws IOException {
             for (long i = 1; i < segmentDocCounts.size(); i++) {
                 // We use set(...) here, because we need to reset the slow to 0.

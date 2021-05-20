@@ -106,7 +106,8 @@ public class QueryShardContext extends QueryRewriteContext {
     private boolean allowUnmappedFields;
     private boolean mapUnmappedFieldAsString;
     private NestedScope nestedScope;
-    private final ValuesSourceRegistry valuesSourceRegistry;
+    //从org.elasticsearch.search.SearchModule.registerAggregations，往后传到这里
+    private final ValuesSourceRegistry valuesSourceRegistry;    //QueryShardContext
     private final Map<String, MappedFieldType> runtimeMappings;
 
     /**

@@ -950,6 +950,7 @@ public class SearchService extends AbstractLifecycleComponent implements IndexEv
                 context::isCancelled
             );
             try {
+                //调用生成AggregatorFactories
                 AggregatorFactories factories = source.aggregations().build(aggContext, null);
                 context.aggregations(new SearchContextAggregations(factories));
             } catch (IOException e) {
